@@ -134,6 +134,37 @@ public:
 
 	}
 
+	sparse operator - (sparse const &obj) {
+		int a = 0, b = 0;
+		if (m == obj.m && n == obj.n) {
+			sparse result(m, n);
+			while (a < e.size() || b < obj.e.size()) {
+				if (e[a].i == obj.e[b].i) {
+					if (e[a].j == obj.e[b].j) {
+						result.e.push_back(element (e[a].i, e[a].j, e[a].x - obj.e[b].x));
+						a++;
+						b++;
+					} else if (e[a].j < obj.e[b].j) {
+						result.e.push_back(element (e[a].i, e[a].j, e[a].x));
+						a++;
+					} else {
+						result.e.push_back(element (e[a].i, obj.e[b].j, obj.e[b].x));
+						b++;
+					}
+				} else if (e[a].i < obj.e[b].i) {
+					result.e.push_back(element (e[a].i, e[a].j, e[a].x));
+					a++;
+				} else {
+					result.e.push_back(element (obj.e[b].i, obj.e[b].j, obj.e[b].x));
+					b++;
+				}
+			}
+			result.nums = result.e.size();
+			return result;
+		} else return sparse (1, 1);
+
+	}
+
 	sparse() {}
 	sparse(int a, int b) {
 		m = a; n = b; nums = 0;
@@ -155,7 +186,7 @@ int main()
 
 	vector<vector<int>> matrix1{
 		{1, 0, 0},
-		{1, 2, 0},
+		// {1, 2, 0},
 		{0, 2, 5},
 		{0, 0, 3}};
 	sparse B;
@@ -165,8 +196,8 @@ int main()
 
 
 	sparse C;
-	C = B + A;
-	C.display();
+	C = A - B;
+	// C.display();
 	C.displayMatrix();
 	return 0;
 }
