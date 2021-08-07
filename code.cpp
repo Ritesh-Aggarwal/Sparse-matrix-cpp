@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -10,9 +9,9 @@ using namespace std;
 #define p 1000000007
 #define ll long long int
 
-struct element
+class element
 {
-
+public:
 	int i;
 	int j;
 	int x;
@@ -20,7 +19,6 @@ struct element
 	{
 		cout << i << " " << j << " " << x << "\n";
 	}
-
 	element(int a, int b, int c)
 	{
 		i = a;
@@ -38,21 +36,21 @@ private:
 	vector<element> e;
 
 public:
-	void create()
-	{
-		cin >> m;
-		cin >> n;
-		cin >> nums;
-		int i = 0;
-		while (i < nums)
-		{
-			int a, b, c;
-			cin >> a >> b >> c;
-			// element ele(a, b, c);
-			e.push_back(element(a, b, c));
-			i++;
-		}
-	}
+	// void create()
+	// {
+	// 	cin >> m;
+	// 	cin >> n;
+	// 	cin >> nums;
+	// 	int i = 0;
+	// 	while (i < nums)
+	// 	{
+	// 		int a, b, c;
+	// 		cin >> a >> b >> c;
+	// 		e.push_back(element(a, b, c));
+	// 		i++;
+	// 	}
+	// }
+
 	void createByMatrix(vector<vector<int>> &matrix)
 	{
 		m = matrix.size();
@@ -103,6 +101,9 @@ public:
 		}
 		cout << "\n";
 	}
+
+	friend istream & operator>>(istream &is, sparse &s);
+
 	sparse operator + (sparse const &obj) {
 		int a = 0, b = 0;
 		if (m == obj.m && n == obj.n) {
@@ -148,14 +149,14 @@ public:
 						result.e.push_back(element (e[a].i, e[a].j, e[a].x));
 						a++;
 					} else {
-						result.e.push_back(element (e[a].i, obj.e[b].j, obj.e[b].x));
+						result.e.push_back(element (e[a].i, obj.e[b].j, -1 * obj.e[b].x));
 						b++;
 					}
 				} else if (e[a].i < obj.e[b].i) {
 					result.e.push_back(element (e[a].i, e[a].j, e[a].x));
 					a++;
 				} else {
-					result.e.push_back(element (obj.e[b].i, obj.e[b].j, obj.e[b].x));
+					result.e.push_back(element (obj.e[b].i, obj.e[b].j, -1 * obj.e[b].x));
 					b++;
 				}
 			}
@@ -171,6 +172,22 @@ public:
 	}
 };
 
+istream & operator>>(istream &is, sparse &s)
+{
+	cin >> s.m;
+	cin >> s.n;
+	cin >> s.nums;
+	int i = 0;
+	while (i < s.nums)
+	{
+		int a, b, c;
+		cin >> a >> b >> c;
+		s.e.push_back(element(a, b, c));
+		i++;
+	}
+	return is;
+}
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -180,7 +197,7 @@ int main()
 	FIO;
 
 	sparse A;
-	A.create();
+	cin >> A;
 	// A.display();
 	A.displayMatrix();
 
@@ -196,7 +213,7 @@ int main()
 
 
 	sparse C;
-	C = A - B;
+	C = (A - B) + B;
 	// C.display();
 	C.displayMatrix();
 	return 0;
