@@ -85,21 +85,19 @@ public:
 	}
 	void displayMatrix()
 	{
-
-		vector<vector<int>> vec(n, vector<int>(m));
-
-		for (int k = 0; k < e.size(); k++)
+		int k = 0;
+		for (int a = 0; a < m; a++)
 		{
-			int r = e[k].i;
-			int c = e[k].j;
-			vec[r - 1][c - 1] = e[k].x;
-		}
-
-		for (int a = 0; a < n; a++)
-		{
-			for (int b = 0; b < m; b++)
+			for (int b = 0; b < n; b++)
 			{
-				cout << vec[a][b] << "\t";
+				if (nums != 0) {
+					if (e[k].i - 1 == a && e[k].j - 1 == b) {
+						cout << e[k].x << "\t";
+						k++;
+					} else
+						cout << "0\t";
+				} else
+					cout << "Matrix is empty\n";
 			}
 			cout << endl;
 		}
@@ -157,7 +155,7 @@ int main()
 
 	vector<vector<int>> matrix1{
 		{1, 0, 0},
-		// {1, 2, 0},
+		{1, 2, 0},
 		{0, 2, 5},
 		{0, 0, 3}};
 	sparse B;
@@ -167,8 +165,8 @@ int main()
 
 
 	sparse C;
-	C = A + B;
-	// C.display();
+	C = B + A;
+	C.display();
 	C.displayMatrix();
 	return 0;
 }

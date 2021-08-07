@@ -3,10 +3,14 @@
 0	7	0	
 
 1	0	0	
+1	2	0	
 0	2	5	
 0	0	3	
 
-6	0	0	
-6	-3	5	
-0	7	3	
+number of rows :1
+number of columns:1
+number of non-zero elements:0
+
+Matrix is empty
+
 
